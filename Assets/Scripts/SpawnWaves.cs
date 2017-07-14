@@ -16,11 +16,14 @@ public class WaveComponents
 public class SpawnWaves : MonoBehaviour
 {
 	public WaveComponents[] wave;
-	public float waveCount;
+	public int waveCount;
 	public float startWait;
 	public float waveWait;
 
 	public Text waveText;
+	public Text readyUp;
+
+	bool buttonPressed = false;
 
 	float spawnCD = 0.35f;
 	float spawnCDRemaining = 0f;
@@ -33,14 +36,20 @@ public class SpawnWaves : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		spawnCDRemaining -= Time.deltaTime;
-		if (spawnCDRemaining <= 0)
+		if(Input.GetKey(KeyCode.R)) 
 		{
-			spawnCDRemaining = spawnCD;
-			StartCoroutine (SpawnWave());
-		
+			readyUp.text = "";
+			buttonPressed = true;
 		}
-
+		if (buttonPressed) 
+		{
+			spawnCDRemaining -= Time.deltaTime;
+			if (spawnCDRemaining <= 0)
+			{
+				spawnCDRemaining = spawnCD;
+				StartCoroutine (SpawnWave ());
+			}
+		}
 	}
 
 	IEnumerator SpawnWave()
@@ -63,5 +72,4 @@ public class SpawnWaves : MonoBehaviour
 			yield return new WaitForSeconds (waveWait);
 		}
 	}
-
 }

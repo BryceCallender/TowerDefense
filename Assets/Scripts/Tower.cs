@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour 
 {
+	public Transform turrentEnd;
 	Transform turrentTransform;
 	public GameObject bulletPrefab;
 	public float range = 10f;
@@ -59,11 +60,10 @@ public class Tower : MonoBehaviour
 
 	void ShootAt(Enemy nearestEnemy)
 	{
-		GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, this.transform.position, this.transform.rotation);
+		GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, turrentEnd.transform.position, turrentEnd.transform.rotation);
 
 		Bullet b = bulletGO.GetComponent<Bullet>();
 		b.target = nearestEnemy.transform;
 		b.damage = damage;
 	}
-	
 }

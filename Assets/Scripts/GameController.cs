@@ -11,42 +11,67 @@ public class GameController : MonoBehaviour
 
 	public Text moneyText;
 	public Text livesText;
-	public Text gameOverText;
-	public Text winText;
-	private bool gameOver = false;
+
+	public GameObject gameOverPanel;
+	public GameObject winPanel;
+	public GameObject spawner;
+	GameObject[] enemiesAlive;
+
+ 	private bool gameOver = false;
 	private bool restart = false;
 
 	// Use this for initialization
-	void Start () 
-	{
-		
-	}
+	void Start ()
+	{}
 
 	public void LoseLife()
 	{
-		health--;
+		if (health > 0) 
+		{
+			health--;
+		}
 		if (health <= 0) 
 		{
 			GameOver();
 		}
 	}
+		
+	public void GameOver()
+	{
+		gameOver = true;
+		gameOverPanel.SetActive (true);
+	}
 
 	public void WinGame()
 	{
-		winText.text = "You win!";
-	}
-
-	public void GameOver()
-	{
-		gameOverText.text = "Game Over!";
-		gameOver = true;
-//		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		winPanel.SetActive (true);
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		enemiesAlive = GameObject.FindGameObjectsWithTag ("Enemy");
+		if (CheckWin ()) 
+		{
+			WinGame ();
+		}
 		moneyText.text = "Money: " + money;
 		livesText.text = "Lives: " + health;
+	}
+
+	bool CheckWin()
+	{ 
+		int waveCount = spawner.GetComponent<SpawnWaves> ().waveCount;
+		int wavesInGame = spawner.GetComponent<SpawnWaves> ().wave.Length;
+
+		int howManyAlive = enemiesAlive.Length;
+		if (howManyAlive == 0 && health > 0 && waveCount == wavesInGame) 
+		{
+			return true;
+		} 
+		else 
+		{
+			return false;
+		}
 	}
 }

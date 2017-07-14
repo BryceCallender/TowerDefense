@@ -12,7 +12,7 @@ public class LaserTower : MonoBehaviour
 	public float range = 10f;
 	public int cost = 5;
 
-	float fireCooldown = 2f;
+	float fireCooldown = 1.5f;
 	float fireCooldownLeft = 0;
 
 	public float damage = 2f;
